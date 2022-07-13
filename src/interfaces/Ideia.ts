@@ -5,3 +5,9 @@ export interface Ideia {
   createdAt: Date;
   id: string;
 }
+
+export interface VotesDto {
+  id: string;
+  upvotes: number;
+  downvotes: number;
+}

@@ -4,3 +4,7 @@ export interface User {
   email: string;
   totalIdeias: number;
 }
+
+export interface InternUser extends User {
+  password: string;
+}
