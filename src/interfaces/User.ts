@@ -12,3 +12,8 @@ export interface User {
 export interface InternUser extends User {
   password: string;
 }
+
+export interface LoginDto {
+  email: string;
+  password: string;
+}
