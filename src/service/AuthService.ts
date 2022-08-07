@@ -1,5 +1,6 @@
 import { AxiosInstance } from 'axios';
 
+import { LoginPayload } from '../interfaces/Auth';
 import { LoginDto } from '../interfaces/User';
 import { app } from './service';
 
@@ -9,9 +10,9 @@ class AuthService {
     this.service = app;
   }
 
-  async login({ email, password }: LoginDto) {
+  async login({ email, password }: LoginDto): Promise<LoginPayload> {
     const res = await this.service.post('/auth/login', { email, password });
-    console.log(res);
+    return res.data;
   }
 }
 

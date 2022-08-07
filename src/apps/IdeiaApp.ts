@@ -30,12 +30,12 @@ class IdeiaApp {
     await RateMyIdeiaModel.deleteOne({ id });
   }
 
-  defaultIdeia(): Ideia {
+  defaultIdeia(userId: string): Ideia {
     return {
       createdAt: new Date(),
       downvotes: 0,
       upvotes: 0,
-      id: uuid(),
+      id: userId,
       text: '',
     };
   }

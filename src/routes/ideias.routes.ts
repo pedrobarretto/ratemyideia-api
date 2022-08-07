@@ -7,7 +7,7 @@ const ideiasRoutes = Router();
 
 ideiasRoutes.post('/', async (req: Request, res: Response) => {
   const { text } = req.body;
-  const defaultIdeia = ideiaApp.defaultIdeia();
+  const defaultIdeia = ideiaApp.defaultIdeia(req.session.userId);
   const ideia = { ...defaultIdeia, text };
   await ideiaApp.create(ideia);
   return res.status(201).json(ideia);
