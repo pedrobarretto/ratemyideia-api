@@ -1,21 +1,22 @@
 import { Router, Request, Response } from 'express';
 
 import { ideiaApp } from '../apps/IdeiaApp';
+import { CheckIfUserIsLoggedIn } from '../middlewares/AuthMiddlewares';
 import { checkIfIdeiaIdExists } from '../middlewares/IdeiasMiddlewares';
 
 const ideiasRoutes = Router();
+ideiasRoutes.use(CheckIfUserIsLoggedIn);
 
 ideiasRoutes.post('/', async (req: Request, res: Response) => {
   const { text } = req.body;
-  const defaultIdeia = ideiaApp.defaultIdeia(req.session.userId);
-  const ideia = { ...defaultIdeia, text };
+  const ideia = ideiaApp.ideiaTemplate(req.session.userId, text);
   await ideiaApp.create(ideia);
-  return res.status(201).json(ideia);
+  return res.status(201).json({ ideia });
 });
 
 ideiasRoutes.get('/', async (req: Request, res: Response) => {
-  const list = await ideiaApp.list();
-  return res.status(200).json(list);
+  const list = await ideiaApp.list(req.session.userId);
+  return res.status(200).json({ list });
 });
 
 ideiasRoutes.put(

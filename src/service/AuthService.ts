@@ -1,8 +1,10 @@
 import { AxiosInstance } from 'axios';
 
-import { LoginPayload } from '../interfaces/Auth';
+import { ErrorPayload, LoginPayload } from '../interfaces/Auth';
 import { LoginDto } from '../interfaces/User';
 import { app } from './service';
+
+interface LoginPayloadWithError extends LoginPayload, ErrorPayload {}
 
 class AuthService {
   service: AxiosInstance;
@@ -10,9 +12,15 @@ class AuthService {
     this.service = app;
   }
 
-  async login({ email, password }: LoginDto): Promise<LoginPayload> {
-    const res = await this.service.post('/auth/login', { email, password });
-    return res.data;
+  async login({ email, password }: LoginDto): Promise<LoginPayloadWithError> {
+    return this.service
+      .post('/auth/v1/login', { email, password })
+      .then((x) => x.data)
+      .catch((err) => {
+        const { data } = err.response;
+        console.error(`[LoginError] >> ${JSON.stringify(data)}`);
+        return data;
+      });
   }
 }
 

@@ -4,6 +4,7 @@ export interface Ideia {
   text: string;
   createdAt: Date;
   id: string;
+  userId: string;
 }
 
 export interface VotesDto {

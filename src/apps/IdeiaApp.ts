@@ -9,8 +9,8 @@ class IdeiaApp {
     return ideia;
   }
 
-  async list(): Promise<Ideia[]> {
-    const list = await RateMyIdeiaModel.find({});
+  async list(userId: string): Promise<Ideia[]> {
+    const list = await RateMyIdeiaModel.find({ userId });
     return list;
   }
 
@@ -30,13 +30,14 @@ class IdeiaApp {
     await RateMyIdeiaModel.deleteOne({ id });
   }
 
-  defaultIdeia(userId: string): Ideia {
+  ideiaTemplate(userId: string, text: string): Ideia {
     return {
       createdAt: new Date(),
       downvotes: 0,
       upvotes: 0,
-      id: userId,
-      text: '',
+      id: uuid(),
+      text,
+      userId,
     };
   }
 }
