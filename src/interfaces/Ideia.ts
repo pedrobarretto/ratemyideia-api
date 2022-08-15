@@ -1,3 +1,8 @@
+export interface VotesList {
+  userId: string;
+  email: string;
+}
+
 export interface Ideia {
   upvotes: number;
   downvotes: number;
@@ -5,6 +10,7 @@ export interface Ideia {
   createdAt: Date;
   id: string;
   userId: string;
+  votes: VotesList[];
 }
 
 export interface VotesDto {

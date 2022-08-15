@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 import { authService } from '../service/AuthService';
-import { saveUserId } from '../utils/session';
+import { clearSession, saveUserId } from '../utils/session';
 
 const usersRoutes = Router();
 
@@ -19,6 +19,13 @@ usersRoutes.post('/login', async (req: Request, res: Response) => {
   saveUserId(req, userId);
 
   return res.status(200).json({ token });
+});
+
+usersRoutes.post('/logout', async (req: Request, res: Response) => {
+  await authService.logout();
+  clearSession(req);
+
+  return res.sendStatus(200);
 });
 
 export { usersRoutes };

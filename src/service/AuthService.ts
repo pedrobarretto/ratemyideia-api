@@ -14,13 +14,17 @@ class AuthService {
 
   async login({ email, password }: LoginDto): Promise<LoginPayloadWithError> {
     return this.service
-      .post('/auth/v1/login', { email, password })
+      .post('/login', { email, password })
       .then((x) => x.data)
       .catch((err) => {
         const { data } = err.response;
         console.error(`[LoginError] >> ${JSON.stringify(data)}`);
         return data;
       });
+  }
+
+  async logout() {
+    await this.service.post('/logout');
   }
 }
 
